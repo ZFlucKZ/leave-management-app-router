@@ -20,13 +20,6 @@ export const findAll = async () => {
 export const findById = async (id: number) => {
   const article = await db.article.findUnique({
     where: { id },
-    select: {
-      id: true,
-      title: true,
-      slug: true,
-      excerpt: true,
-      image: true,
-    },
   });
 
   return article;
