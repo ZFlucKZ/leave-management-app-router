@@ -1,6 +1,7 @@
 'use client';
 
 import { type Article } from '@/features/articles/types';
+import { Button } from '@/features/shadcn/components/ui/button';
 
 interface ArticleDetailsProps {
   article: Article;
@@ -11,7 +12,7 @@ const ArticleDetails = ({ article, onUpdate }: ArticleDetailsProps) => {
   return (
     <div>
       {article.title}
-      <button onClick={() => onUpdate(article.id)}>Update</button>
+      <Button onClick={() => onUpdate(article.id)}>Update</Button>
     </div>
   );
 };

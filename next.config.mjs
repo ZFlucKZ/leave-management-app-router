@@ -10,6 +10,11 @@ const nextConfig = {
         destination: '/leaves',
         permanent: true,
       },
+      {
+        source: '/admin',
+        destination: '/admin/dashboard',
+        permanent: true,
+      },
     ];
   },
 };

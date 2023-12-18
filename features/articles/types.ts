@@ -3,10 +3,10 @@
 
 import { type findById, type findAll } from '@/features/articles/api';
 
-// export interface Article {
-//   id: number;
-//   title: string;
-// }
+export interface Article {
+  id: number;
+  title: string;
+}
 
 // export type CreateArticleInput = z.infer<typeof add>;
 
