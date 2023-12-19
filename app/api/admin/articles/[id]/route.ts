@@ -1,6 +1,6 @@
-import * as api from '@/features/articles/api';
+import * as api from '@/features/articles/admin/api';
 import * as validators from '@/features/articles/validator';
-import { type UpdateArticleInput } from '@/features/articles/types';
+import { type UpdateArticleInput } from '@/features/articles/admin/types';
 
 interface Params {
   params: {

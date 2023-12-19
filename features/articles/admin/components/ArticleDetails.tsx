@@ -1,18 +1,39 @@
-import { useGetArticle } from '@/features/articles/admin/hooks/api';
+import ArticleForm from '@/features/articles/admin/components/ArticleForm';
+import {
+  useGetArticle,
+  useUpdateArticle,
+} from '@/features/articles/admin/hooks/api';
+import { type UpdateArticleInput } from '@/features/articles/admin/types';
 import type * as types from '@/features/articles/types';
+import { Button } from '@/features/shadcn/components/ui/button';
+import {
+  Dialog,
+  DialogContent,
+  DialogTrigger,
+} from '@/features/shadcn/components/ui/dialog';
+import { ScrollArea } from '@/features/shadcn/components/ui/scroll-area';
 import { Separator } from '@/features/shadcn/components/ui/separator';
 import { toDateString } from '@/features/shared/helpers/date';
 import { CalendarDays, FileEdit } from 'lucide-react';
 import Image from 'next/image';
+import { useState } from 'react';
 
 interface ArticleDetailsProps {
   id: types.ArticleDetails['id'];
 }
 
 const ArticleDetails = ({ id }: ArticleDetailsProps) => {
+  const [open, setOpen] = useState(false);
+
+  const { mutateAsync } = useUpdateArticle(id);
   const article = useGetArticle(id);
 
   if (!article) return <div>No article found</div>;
+
+  const handleUpdateArticle = async (form: UpdateArticleInput) => {
+    setOpen(false);
+    await mutateAsync(form);
+  };
 
   return (
     <article>
@@ -34,7 +55,24 @@ const ArticleDetails = ({ id }: ArticleDetailsProps) => {
           <CalendarDays className="mr-2 w-6"></CalendarDays>
           {toDateString(article.createdAt)}
         </div>
-        <FileEdit className="w-6"></FileEdit>
+        <Dialog open={open} onOpenChange={setOpen}>
+          <DialogTrigger asChild>
+            <Button variant="outline" size="icon">
+              <FileEdit className="w-6"></FileEdit>
+            </Button>
+          </DialogTrigger>
+          <DialogContent>
+            <ScrollArea className="max-h-[50vh]">
+              <div className="p-4">
+                <ArticleForm
+                  kind="edit"
+                  article={article}
+                  onSubmit={handleUpdateArticle}
+                ></ArticleForm>
+              </div>
+            </ScrollArea>
+          </DialogContent>
+        </Dialog>
       </div>
       <Separator></Separator>
       <p className="my-2 text-gray-600">{article.content}</p>

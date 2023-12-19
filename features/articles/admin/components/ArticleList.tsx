@@ -1,5 +1,7 @@
 import ArticleDetails from '@/features/articles/admin/components/ArticleDetails';
 import ArticleForm from '@/features/articles/admin/components/ArticleForm';
+import { useCreateArticle } from '@/features/articles/admin/hooks/api';
+import { type AddArticleInput } from '@/features/articles/admin/types';
 import { type ArticleItem } from '@/features/articles/types';
 import { Button } from '@/features/shadcn/components/ui/button';
 import {
@@ -12,12 +14,17 @@ import DataGrid, {
   type DataGridColumn,
 } from '@/features/ui/components/DataGrid';
 import { Plus } from 'lucide-react';
+import { useState } from 'react';
 
 interface ArticleListProps {
   articles: ArticleItem[];
 }
 
 const ArticleList = ({ articles }: ArticleListProps) => {
+  const [open, setOpen] = useState(false);
+
+  const { mutateAsync } = useCreateArticle();
+
   const columns: DataGridColumn<ArticleItem>[] = [
     {
       field: 'title',
@@ -29,6 +36,11 @@ const ArticleList = ({ articles }: ArticleListProps) => {
     },
   ];
 
+  const handleAddArticle = async (article: AddArticleInput) => {
+    setOpen(false);
+    await mutateAsync(article);
+  };
+
   return (
     <>
       <DataGrid
@@ -37,7 +49,7 @@ const ArticleList = ({ articles }: ArticleListProps) => {
         rows={articles}
         detailsComponent={ArticleDetails}
       ></DataGrid>
-      <Dialog>
+      <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
           <Button
             variant="outline"
@@ -50,7 +62,10 @@ const ArticleList = ({ articles }: ArticleListProps) => {
         <DialogContent>
           <ScrollArea className="max-h-[50vh]">
             <div className="p-4">
-              <ArticleForm></ArticleForm>
+              <ArticleForm
+                kind="create"
+                onSubmit={handleAddArticle}
+              ></ArticleForm>
             </div>
           </ScrollArea>
         </DialogContent>

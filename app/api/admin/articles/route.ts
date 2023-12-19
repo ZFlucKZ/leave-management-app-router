@@ -1,11 +1,11 @@
-import { create } from '@/features/articles/api';
-import { type CreateArticleInput } from '@/features/articles/types';
-import { add } from '@/features/articles/validator';
+import * as api from '@/features/articles/admin/api';
+import { type AddArticleInput } from '@/features/articles/admin/types';
+import * as validators from '@/features/articles/admin/validator';
 import { revalidatePath } from 'next/cache';
 
 export const POST = async (req: Request) => {
-  const form = await (req.json() as Promise<CreateArticleInput>);
-  const formValidation = await add.safeParseAsync(form);
+  const form = await (req.json() as Promise<AddArticleInput>);
+  const formValidation = await validators.add.safeParseAsync(form);
 
   if (!formValidation.success) {
     return new Response(JSON.stringify(formValidation.error), {
@@ -16,7 +16,7 @@ export const POST = async (req: Request) => {
     });
   }
 
-  const article = await create(formValidation.data);
+  const article = await api.add(formValidation.data);
 
   revalidatePath('/articles');
 
