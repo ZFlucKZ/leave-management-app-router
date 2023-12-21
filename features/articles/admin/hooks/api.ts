@@ -45,12 +45,15 @@ export const useGetArticle = (id: ArticleDetails['id']) => {
 export const useCreateArticle = () => {
   return {
     mutateAsync: async (form: AddArticleInput) => {
+      const formData = new FormData();
+      formData.append('title', form.title);
+      formData.append('excerpt', form.excerpt);
+      formData.append('content', form.content);
+      if (form.image) formData.append('image', form.image);
+
       const res = await fetch('/api/admin/articles', {
         method: 'POST',
-        body: JSON.stringify(form),
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        body: formData,
       });
       const article = await (res.json() as Promise<ArticleDetails>);
 

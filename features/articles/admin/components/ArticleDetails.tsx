@@ -14,6 +14,7 @@ import {
 import { ScrollArea } from '@/features/shadcn/components/ui/scroll-area';
 import { Separator } from '@/features/shadcn/components/ui/separator';
 import { toDateString } from '@/features/shared/helpers/date';
+import { getImagePath } from '@/features/shared/helpers/upload';
 import { CalendarDays, FileEdit } from 'lucide-react';
 import Image from 'next/image';
 import { useState } from 'react';
@@ -40,7 +41,7 @@ const ArticleDetails = ({ id }: ArticleDetailsProps) => {
       <figure>
         <div className="relative h-48 w-full object-contain">
           <Image
-            src={article.image}
+            src={getImagePath(article.image)}
             alt={article.title}
             fill
             sizes="(min-width: 800px) 50vw, 100vw"

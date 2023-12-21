@@ -1,6 +1,7 @@
 'use client';
 
 import { type ArticleDetails } from '@/features/articles/types';
+import { getImagePath } from '@/features/shared/helpers/upload';
 import Image from 'next/image';
 
 interface ArticleDetailsProps {
@@ -14,7 +15,7 @@ const ArticleDetails = ({
     <article>
       <div className="relative h-[500px]">
         <Image
-          src={image}
+          src={getImagePath(image)}
           alt={title}
           fill
           sizes="(min-width: 800px) 50vw, 100vw"

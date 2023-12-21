@@ -16,6 +16,8 @@ import { Button } from '@/features/shadcn/components/ui/button';
 import type * as types from '../types';
 import { type ArticleDetails } from '@/features/articles/types';
 import { capitalize } from 'lodash';
+import ImageUploader from '@/features/ui/components/ImageUploader';
+import { getImagePath } from '@/features/shared/helpers/upload';
 
 type ArticleFormProps =
   | { kind: 'create'; onSubmit: SubmitHandler<types.AddArticleInput> }
@@ -28,19 +30,23 @@ type ArticleFormProps =
 const ArticleForm = (props: ArticleFormProps) => {
   const { kind, onSubmit } = props;
 
-  const form = useForm({
+  const form = useForm<
+    typeof onSubmit extends SubmitHandler<types.AddArticleInput>
+      ? types.AddArticleInput
+      : types.UpdateArticleInput
+  >({
     mode: 'onChange',
     resolver: zodResolver(
       kind === 'create' ? validators.add : validators.update,
     ),
     defaultValues:
       kind === 'edit'
-        ? { ...props.article, image: '' }
+        ? { ...props.article, image: undefined }
         : {
             title: '',
             content: '',
             excerpt: '',
-            image: '',
+            image: undefined,
           },
   });
 
@@ -54,6 +60,17 @@ const ArticleForm = (props: ArticleFormProps) => {
           {kind === 'create' ? 'Create Article' : 'Update Article'}
         </h1>
         <Separator></Separator>
+        <ImageUploader
+          defaultImage={
+            props.kind === 'edit'
+              ? getImagePath(props.article.image)
+              : '/assets/images/no-image.png'
+          }
+          error={form.formState.errors.image?.message}
+          onImageChanged={(image) => {
+            form.setValue('image', image, { shouldValidate: true });
+          }}
+        ></ImageUploader>
         <FormField
           control={form.control}
           name="title"

@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { image } from '@/features/shared/validators/image';
 
 // z.object({
 //   name: z.string(),
@@ -13,7 +14,7 @@ export const add = z.object({
   title: z.string().min(1),
   excerpt: z.string().min(1),
   content: z.string().min(1),
-  image: z.string().optional(),
+  image: image,
 });
 
 export const update = add.partial();
