@@ -3,10 +3,13 @@
 import LeaveForm from '@/features/leaves/components/LeaveForm';
 import { useEditLeave, useGetLeave } from '@/features/leaves/hooks/api';
 import { type UpdateLeaveInput } from '@/features/leaves/types';
+import { useUiStore } from '@/features/ui/store';
 import { useParams, useRouter } from 'next/navigation';
 
 const EditLeave = () => {
   const router = useRouter();
+
+  const setToast = useUiStore((state) => state.setToast);
 
   const { id } = useParams<{ id: string }>();
   const { data: leave, isLoading } = useGetLeave(+id);
@@ -15,7 +18,10 @@ const EditLeave = () => {
 
   const editLeave = async (form: UpdateLeaveInput) => {
     await mutateAsync(form);
-
+    setToast({
+      type: 'Success',
+      message: 'Leave updated successfully',
+    });
     router.push('/leaves');
   };
 
