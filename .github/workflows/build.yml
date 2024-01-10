@@ -1,5 +1,6 @@
 name: Build Project
-on: push
+# on: push
+on: [push, workflow_dispatch]
 jobs:
   build:
     runs-on: windows-latest
@@ -18,3 +19,23 @@ jobs:
         run: pnpm install --frozen-lockfile
       # - name: Build
       #   run: pnpm build
+  build-start:
+    needs: build
+    runs-on: windows-latest
+    steps:
+      - name: Get code
+        uses: actions/checkout@v4
+      - name: Install NodeJS
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - name: Install PNPM
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      # - name: Build
+      #   run: pnpm build
+      # - name: Deploy
+      #   run: pnpm start

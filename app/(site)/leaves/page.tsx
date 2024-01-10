@@ -4,11 +4,12 @@ import LeaveList from '@/features/leaves/components/LeaveList';
 import { useGetLeaves } from '@/features/leaves/hooks/api';
 
 const LeavesPage = () => {
-  const { isLoading, leaves } = useGetLeaves();
+  const { data, status } = useGetLeaves();
 
-  if (isLoading) return <div>Loading...</div>;
+  if (status === 'pending') return <div>Loading...</div>;
+  if (!data) return <div>No Leaves Found</div>;
 
-  return <LeaveList leaves={leaves}></LeaveList>;
+  return <LeaveList leaves={data}></LeaveList>;
 };
 
 export default LeavesPage;
