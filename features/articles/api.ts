@@ -1,6 +1,10 @@
 import db from '@/features/shared/db';
 
-export const findAll = async () => {
+interface findAllParams {
+  limit?: number | undefined;
+}
+
+export const findAll = async ({ limit }: findAllParams = {}) => {
   const articles = await db.article.findMany({
     select: {
       id: true,
@@ -12,6 +16,7 @@ export const findAll = async () => {
     orderBy: {
       updatedAt: 'desc',
     },
+    take: limit,
   });
 
   return articles;

@@ -26,10 +26,3 @@ export const PATCH = async (req: Request, { params: { id } }: Params) => {
 
   return Response.json(article);
 };
-
-export const DELETE = async (_req: Request, { params: { id } }: Params) => {
-  const index = await api.remove(+id);
-  if (index === -1) return new Response(null, { status: 404 });
-
-  return new Response(null, { status: 204 });
-};

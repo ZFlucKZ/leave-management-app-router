@@ -1,4 +1,4 @@
-import { type Leave } from '@/features/leaves/types';
+import { type LeaveItem } from '@/features/leaves/types';
 import { Badge } from '@/features/shadcn/components/ui/badge';
 import {
   Card,
@@ -11,7 +11,7 @@ import { toDateString } from '@/features/shared/helpers/date';
 import { Edit } from 'lucide-react';
 import Link from 'next/link';
 
-const statusColor = (status: Leave['status']) => {
+const statusColor = (status: LeaveItem['status']) => {
   switch (status) {
     case 'APPROVED':
       return 'bg-green-500';
@@ -22,7 +22,7 @@ const statusColor = (status: Leave['status']) => {
   }
 };
 
-const LeaveItem = ({ id, reason, leaveDate, status }: Leave) => {
+const LeaveItem = ({ id, reason, leaveDate, status }: LeaveItem) => {
   return (
     <Card className="flex flex-col">
       <CardHeader className="font-bold">{toDateString(leaveDate)}</CardHeader>

@@ -1,6 +1,7 @@
 import { type Prisma, PrismaClient, type LeaveStatus } from '@prisma/client';
 import { faker } from '@faker-js/faker';
 import { slugify } from '@/features/shared/helpers/slugify';
+import bcrypt from 'bcryptjs';
 
 const prisma = new PrismaClient();
 
@@ -11,8 +12,10 @@ async function main() {
     update: {},
     create: {
       email: 'admin@abc.com',
+      password: await bcrypt.hash('password', 12),
       name: 'admin',
       role: 'ADMIN',
+      image: faker.internet.avatar(),
     },
   });
 
@@ -25,6 +28,7 @@ async function main() {
     const createuserInput: Prisma.UserCreateInput = {
       name: faker.internet.displayName(),
       email: faker.internet.email(),
+      password: await bcrypt.hash(faker.internet.password(), 12),
       role: faker.helpers.arrayElement(['ADMIN', 'MANAGER', 'MEMBER']),
       image: faker.internet.avatar(),
     };

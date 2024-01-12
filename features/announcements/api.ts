@@ -1,6 +1,10 @@
 import db from '@/features/shared/db';
 
-export const findAll = async () => {
+interface findAllParams {
+  limit?: number | undefined;
+}
+
+export const findAll = async ({ limit }: findAllParams = {}) => {
   const announcements = await db.announcement.findMany({
     select: {
       id: true,
@@ -11,6 +15,7 @@ export const findAll = async () => {
     orderBy: {
       createdAt: 'desc',
     },
+    take: limit,
   });
 
   return announcements;

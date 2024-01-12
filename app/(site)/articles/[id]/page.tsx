@@ -1,7 +1,5 @@
-import { findById, update } from '@/features/articles/api';
+import { findById } from '@/features/articles/api';
 import ArticleDetails from '@/features/articles/components/ArticleDetails';
-import { type Article } from '@/features/articles/types';
-import { revalidatePath } from 'next/cache';
 
 interface ArticlePageProps {
   params: {
@@ -15,21 +13,19 @@ export const generateStaticParams = () => {
 };
 
 //* Server Action
-const updateArticle = async (id: Article['id']) => {
-  'use server';
-  await update(id, { title: 'yyyyy' });
+// const updateArticle = async (id: Article['id']) => {
+//   'use server';
+//   await update(id, { title: 'yyyyy' });
 
-  revalidatePath(`/articles/${id}`);
-};
+//   revalidatePath(`/articles/${id}`);
+// };
 
 const ArticlePage = async ({ params: { id } }: ArticlePageProps) => {
   const article = await findById(+id);
 
   if (!article) return <div>No Article found.</div>;
 
-  return (
-    <ArticleDetails article={article} onUpdate={updateArticle}></ArticleDetails>
-  );
+  return <ArticleDetails article={article}></ArticleDetails>;
 };
 
 export default ArticlePage;

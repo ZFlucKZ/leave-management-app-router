@@ -2,6 +2,7 @@
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { SessionProvider } from 'next-auth/react';
 
 const queryClient = new QueryClient();
 
@@ -12,7 +13,7 @@ interface ClientProvidersProps {
 const ClientProviders = ({ children }: ClientProvidersProps) => {
   return (
     <QueryClientProvider client={queryClient}>
-      {children}
+      <SessionProvider>{children}</SessionProvider>
       <ReactQueryDevtools initialIsOpen={false}></ReactQueryDevtools>
     </QueryClientProvider>
   );
