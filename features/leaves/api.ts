@@ -29,6 +29,8 @@ export const findById = async (id: number) => {
       id: true,
       reason: true,
       leaveDate: true,
+      status: true,
+      rejectionReason: true,
     },
   });
 
