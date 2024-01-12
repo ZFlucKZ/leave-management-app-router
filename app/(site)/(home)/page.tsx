@@ -1,7 +1,7 @@
 import Image from 'next/image';
 // import { setTimeout } from 'timers/promises';
 
-const HomePage = async () => {
+const HomePage = () => {
   // await setTimeout(3_000);
   return (
     <>

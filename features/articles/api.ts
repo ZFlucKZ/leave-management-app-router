@@ -12,6 +12,7 @@ export const findAll = async ({ limit }: findAllParams = {}) => {
       slug: true,
       excerpt: true,
       image: true,
+      updatedAt: true,
     },
     orderBy: {
       updatedAt: 'desc',

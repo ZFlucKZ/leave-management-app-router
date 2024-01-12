@@ -1,4 +1,4 @@
-import { findById, findBySlug } from '@/features/articles/api';
+import { findBySlug } from '@/features/articles/api';
 import ArticleDetails from '@/features/articles/components/ArticleDetails';
 import { getImagePath } from '@/features/shared/helpers/upload';
 import { type Metadata } from 'next';
