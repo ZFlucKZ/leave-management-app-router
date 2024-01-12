@@ -8,7 +8,7 @@ export const POST = async (req: Request) => {
 
   const formData = await req.formData();
   const image = formData.get('image') as File | null;
-  const article = api.add(+session.user.id, {
+  const article = await api.add(+session.user.id, {
     title: formData.get('title') as string,
     excerpt: formData.get('excerpt') as string,
     content: formData.get('content') as string,

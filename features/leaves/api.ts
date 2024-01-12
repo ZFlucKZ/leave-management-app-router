@@ -4,8 +4,11 @@ import {
 } from '@/features/leaves/types';
 import prisma from '@/features/shared/db';
 
-export const findAll = async () => {
+export const findAll = async (userId: number) => {
   const leaves = prisma.leave.findMany({
+    where: {
+      userId,
+    },
     select: {
       id: true,
       reason: true,
@@ -39,11 +42,11 @@ export const findById = async (id: number) => {
   return leave;
 };
 
-export const add = async (input: AddLeaveInput) => {
+export const add = async (userId: number, input: AddLeaveInput) => {
   const leave = prisma.leave.create({
     data: {
       ...input,
-      userId: 1,
+      userId,
     },
   });
 

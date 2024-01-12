@@ -29,3 +29,11 @@ export const findById = async (id: number) => {
 
   return article;
 };
+
+export const findBySlug = async (slug: string) => {
+  const article = await db.article.findUnique({
+    where: { slug },
+  });
+
+  return article;
+};

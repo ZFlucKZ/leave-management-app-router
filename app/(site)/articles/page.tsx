@@ -1,6 +1,10 @@
 import { findAll } from '@/features/articles/api';
 import ArticleList from '@/features/articles/components/ArticleList';
 
+export const metadata = {
+  title: 'All Articles - Leave Management',
+};
+
 const ArticlesPage = async () => {
   const articles = await findAll();
 
