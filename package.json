@@ -12,6 +12,7 @@
     "db:push": "prisma db push",
     "db:studio": "prisma studio",
     "db:reset": "prisma migrate reset",
+    "db:deploy": "prisma migrate deploy",
     "tunnelmole": "tunnelmole 3000"
   },
   "prisma": {
